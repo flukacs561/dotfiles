@@ -26,8 +26,8 @@ rec {
       off = "sudo shutdown 0";
       tp = "xinput --set-prop 12 181";
       gitl = "git log --pretty --oneline --graph";
-      gs = "git status"
-      gd = "git diff"
+      gs = "git status";
+      gd = "git diff";
 
       ll = "ls -AGFhlv --group-directories-first --time-style=long-iso --color=always";
       l = "ls -GFhlv --group-directories-first --time-style=long-iso --color=always";
@@ -73,11 +73,6 @@ rec {
 
   programs.ssh = {
     enable = true;
-    matchBlocks."CodeBerg" = {
-      host = "codeberg.org";
-      identityFile = "${args.homeDirectory}/.ssh/id_ed25519";
-      extraOptions.PreferredAuthentications = "publickey";
-    };
     matchBlocks."GitHub" = {
       host = "github.org";
       identityFile = "${args.homeDirectory}/.ssh/id_ed25519";
@@ -120,7 +115,7 @@ rec {
     };
     signing = {
       signByDefault = true;
-      key = "0xA0FC4A8B42E98653";
+      key = "flukacs561@gmail.com";
     };
   };
 
