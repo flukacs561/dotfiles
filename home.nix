@@ -135,6 +135,7 @@ rec {
       pictures = "${args.homeDirectory}/pix";
       templates = "${args.homeDirectory}/code";
       videos = "${args.homeDirectory}/usb";
+      publicShare = "${args.homeDirectory}/dox/books";
     };
   };
     
