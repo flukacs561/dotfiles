@@ -4,6 +4,8 @@ import Data.Ratio ( (%) )
 
 import XMonad
 
+import XMonad.Actions.SpawnOn ( spawnOn )
+
 import qualified XMonad.StackSet as W
 
 import qualified XMonad.Prompt as P
@@ -372,7 +374,6 @@ myManageHook = composeAll
     , className =? "mpv" --> doShift "video" <+> doRaise
     , className =? "thunderbird" --> doShift "mail"
     , appName =? "Calendar" --> doFloatCenter
-    , title =? "Passwords.kdbx [Locked] - KeePassXC" --> doShift "mail"
     --, isFullscreen --> doFullFloat
     ]
 
@@ -388,7 +389,7 @@ myManageHook = composeAll
 myStartupHook :: X ()
 myStartupHook = do
   spawn "setxkbmap hu"
-  spawn "keepassxc"
+  spawnOn "mail" "keepassxc"
 
 -----------------------------------------------------------------------
 -- Log hook
