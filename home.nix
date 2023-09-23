@@ -62,7 +62,7 @@ rec {
     enable = true;
     enableSshSupport = true;
     enableScDaemon = true;
-    pinentryFlavor = "gtk2";
+    pinentryFlavor = "tty";
     # 84600 seconds is 24 hours
     defaultCacheTtl = 84600;
     maxCacheTtl = 84600;
