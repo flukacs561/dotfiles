@@ -161,7 +161,7 @@ in
       pandoc
       hakyll
     ]))
-    (callPackage ./mdtf.nix {})
+    (callPackage ./hxh.nix {})
     haskell-language-server
     (agda.withPackages ( agda-packages: with agda-packages; [ standard-library ]))
     (python3.withPackages ( python-packages: with python-packages; [
