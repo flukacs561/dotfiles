@@ -11,19 +11,19 @@ Config { font = "Iosevka Comfy Regular 10"
        , pickBroadest = False
        , persistent = False
        , hideOnStart = False
-       , iconRoot = "/home/lukacsf/code/system/"
+       , iconRoot = "/home/lukacsf/code/dotfiles/"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [ Run Com "echo" ["<fn=1>📅</fn>"] "calicon" 3600
 		    , Run Date "%b %d. %a, %H:%M:%S " "date" 1
                     , Run Com "echo" ["<fn=1>⚡</fn>"] "baticon" 3600
-		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/system/xmobar-scripts/battery.sh"] "mybattery" 300
+		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/dotfiles/xmobar-scripts/battery.sh"] "mybattery" 300
                     , Run Com "echo" ["<fn=1>📢</fn>"] "volicon" 3600
-                    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/system/xmobar-scripts/volume.sh"] "myvolume" 1
+                    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/dotfiles/xmobar-scripts/volume.sh"] "myvolume" 1
                     , Run Com "echo" ["<fn=1>🌐</fn>"] "neticon" 3600
-   		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/system/xmobar-scripts/network.sh"] "mynetwork" 30
+   		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/dotfiles/xmobar-scripts/network.sh"] "mynetwork" 30
                     , Run Com "echo" ["<fn=1>📫</fn>"] "mailicon" 3600
-		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/system/xmobar-scripts/notmuch.sh"] "mynotmuch" 300
+		    , Run Com "/run/current-system/sw/bin/sh" ["/home/lukacsf/code/dotfiles/xmobar-scripts/notmuch.sh"] "mynotmuch" 300
 		    , Run MPD ["-t", "<track>"] 10
 		    , Run StdinReader
                     , Run Com "echo" ["<fn=1>🌲</fn>"] "treeicon" 3600

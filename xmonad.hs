@@ -401,7 +401,7 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 main :: IO ()
 main = do
-  xmobar <- spawnPipe "xmobar $HOME/code/system/xmobar"
+  xmobar <- spawnPipe "xmobar $HOME/code/dotfiles/xmobar"
   xmonad . ewmh . ewmhFullscreen . docks $  def
     { terminal = myTerminal
     , focusFollowsMouse = myFocusFollowsMouse
