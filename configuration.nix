@@ -29,6 +29,16 @@ in
         "www.4channel.org"
         "boards.4channel.org"
         "www.boards.4channel.org"
+        "www.blikk.hu"
+        "blikk.hu"
+        "www.nlc.hu"
+        "nlc.hu"
+        "www.reddit.com"
+        "reddit.com"
+        "www.origo.hu"
+        "origo.hu"
+        "tiktok.com"
+        "www.tiktok.com"
       ];
     in
       {
