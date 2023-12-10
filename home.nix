@@ -234,8 +234,8 @@ rec {
       # document types
       "application/epub+zip" = [ "zathura.desktop" ];
       "application/pdf" = [ "zathura.desktop" ];
- #     "text/plain" = [ "emacsclient.desktop" ];
- #     "text/tex" = [ "emacsclient.desktop" ];
+      "text/plain" = [ "helix.desktop" ];
+      "text/tex" = [ "helix.desktop" ];
 
       # audio types
       "auido/mpeg" = [ "mpv.desktop" ];
@@ -245,11 +245,11 @@ rec {
       "audio/wbm" = [ "mpv.desktop" ];
 
       # image types
-      "image/jpeg" = [ "chromium-browser.desktop" ];
-      "image/gif" = [ "chromium-browser.desktop" ];
-      "image/png" = [ "chromium-browser.desktop" ];
-      "image/svg+xml" = [ "chromium-browser.desktop" ];
-      "image/vnd.microsoft.icon" = [ "chromium-browser.desktop" ];
+      "image/jpeg" = [ "brave.desktop" ];
+      "image/gif" = [ "brave.desktop" ];
+      "image/png" = [ "brave.desktop" ];
+      "image/svg+xml" = [ "brave.desktop" ];
+      "image/vnd.microsoft.icon" = [ "brave.desktop" ];
 
       # video types
       "video/x-msvideo" = [ "mpv.desktop" ];
@@ -259,11 +259,11 @@ rec {
       "video/x-matroska" = [ "mpv.desktop" ];
 
       # web types
-      "text/html" = [ "chromium-browser.desktop" ];
-      "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
-      "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
-      "x-scheme-handler/about" = [ "chromium-browser.desktop" ];
-      "x-scheme-handler/unknown" = [ "chromium-browser.desktop" ];
+      "text/html" = [ "brave.desktop" ];
+      "x-scheme-handler/http" = [ "brave.desktop" ];
+      "x-scheme-handler/https" = [ "brave.desktop" ];
+      "x-scheme-handler/about" = [ "brave.desktop" ];
+      "x-scheme-handler/unknown" = [ "brave.desktop" ];
     };
   };
 
