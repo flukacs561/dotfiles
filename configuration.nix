@@ -159,7 +159,9 @@ in
     git
     gh
     helix
-    fzf
+    skim
+    ripgrep
+    ffmpeg
     # programming languages
     texlive.combined.scheme-full
     texlab

@@ -39,6 +39,13 @@ rec {
 
       laptop = "xrandr --output eDP-1 --auto --output DP-2 --off";
       monitor = "xrandr --output eDP-1 --off --output DP-2 --auto";
+
+      h = "hx .";
+      z = "zathura";
+      ff = "hx $(sk)";
+      d = "directory_switcher";
+      f = "open_and_switch";
+      g = "grep_from_directory";
     };
     packages = with pkgs; [ xdotool ];
     file."latexmkrc" = {
@@ -94,6 +101,51 @@ rec {
       ''
         autoload -U colors && colors
         PS1="[%F{green}f%f%F{brown}@%f%F{green}💻%f %~] %F{green}>%f "
+
+        directory_switcher() {
+          local current_dir
+          current_dir=$(pwd)
+
+          cd ~/
+      
+          local selected_item
+          selected_item=$(sk)
+      
+          # Check if an item was selected
+          if [ -n "$selected_item" ]; then
+              cd "$selected_item"
+          else
+              cd "$current_dir"
+          fi
+      }
+
+      open_and_switch() {
+        local current_dir
+        current_dir=$(pwd)
+
+        cd ~/
+
+        local selected_item
+        selected_item=$(sk)
+
+        if [ -n "$selected_item" ]; then
+            cd $(dirname "$selected_item")
+            hx $(basename "$selected_item")
+        else
+            cd "$current_dir"
+        fi
+      }
+
+      grep_from_directory() {
+        local file
+        file=$(sk --ansi -i -c 'rg --color=always --line-number "{}"' | cut -d ':' -f 1)
+
+        echo "$file"
+
+        if [ -n "$file" ]; then
+            hx "$file"
+        fi
+      }
         '';
     defaultKeymap = "emacs";
     dotDir = "/.config/zsh";
