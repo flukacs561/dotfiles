@@ -172,6 +172,11 @@ rec {
     };
   };
 
+  programs.wezterm = {
+    enable = true;
+    extraConfig = builtins.readFile ./wezterm.lua;
+  };
+
   xdg = {
     enable = true;
     cacheHome = "${args.homeDirectory}/.cache";
