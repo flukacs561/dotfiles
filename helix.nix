@@ -23,7 +23,6 @@ in
         };
       };
       keys.normal = {
-        g.N = ":insert-output LC_TIME='hu_HU.UTF-8' date '+%A, %Y. %B %d.'";
         g.u = ":lsp-restart";
         esc = ["collapse_selection" "keep_primary_selection"];
         "A-e" = ["collapse_selection" "keep_primary_selection"];
