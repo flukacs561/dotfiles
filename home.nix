@@ -171,6 +171,43 @@ rec {
     };
   };
 
+  programs.newsboat = {
+    enable = true;
+    browser = "${pkgs.brave}/bin/brave";
+    extraConfig = ''
+      macro v set browser mpv; one; set browser ${pkgs.brave}/bin/brave
+
+      bind-key j down
+      bind-key k up
+      bind-key u toggle-article-read
+    '';
+    urls = [
+      {
+        title = "Truth Unites";
+        tags =  ["chr" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCtWDnUokOD--s2aFxLT5uVA";
+      }
+      {
+        title = "Invocabo Nomen Domini";
+        tags = ["chr"];
+        url = "https://invocabo.wordpress.com/feed/";
+      }
+      {
+        title = "Thomas Wangenheim";
+        tags = ["yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCYbDnz0vgLz3Uqi3_k3HUUA";
+      }
+      {
+        title = "Project Mage";
+        url = "https://project-mage.org/rss.xml";
+      }
+      {
+        title = "Protesilaos";
+        url = "https://protesilaos.com/master.xml";
+      }
+    ];
+  };
+
   xdg = {
     enable = true;
     cacheHome = "${args.homeDirectory}/.cache";

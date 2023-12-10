@@ -61,6 +61,8 @@ in
     xkbOptions = "ctrl:nocaps";
     desktopManager.wallpaper.mode = "scale";
   };
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
   
   services.xserver.libinput = {
     enable = true;
@@ -69,11 +71,11 @@ in
   };
 
   # Set LightDM with a minimal greeter.
-  services.xserver.displayManager.lightdm = {
-    enable = true;
-    # This will also set the desktop wallpaper
-    background = ./forest-background.jpg;
-  };
+  # services.xserver.displayManager.lightdm = {
+  #   enable = true;
+  #   # This will also set the desktop wallpaper
+  #   background = ./forest-background.jpg;
+  # };
 
   services.xserver.windowManager.xmonad = {
     enable = true;
@@ -146,12 +148,14 @@ in
   environment.systemPackages = with pkgs; [
     # GUI programs
     chromium
+    brave
     mpv
-    pcmanfm
     pavucontrol
     zathura
     keepassxc
     thunderbird
+    wezterm
+    libsForQt5.bluedevil
     # CLI programs
     xclip
     xsecurelock
@@ -162,6 +166,7 @@ in
     skim
     ripgrep
     ffmpeg
+    cmus
     # programming languages
     texlive.combined.scheme-full
     texlab
