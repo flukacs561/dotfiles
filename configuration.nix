@@ -154,6 +154,7 @@ in
     thunderbird
     # CLI programs
     xclip
+    xsecurelock
     rsync
     git
     gh

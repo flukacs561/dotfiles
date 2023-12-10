@@ -80,10 +80,10 @@ rec {
     };
   };
 
-  services.screen-locker.enable = args.lock-screen;
-  services.betterlockscreen = {
+  services.screen-locker = {
     enable = args.lock-screen;
     inactiveInterval = 60;
+    lockCmd = "XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_PASSWORD_PROMPT=\"asterisks\" ${pkgs.xsecurelock}/bin/xsecurelock";
   };
 
   programs.zsh = {
