@@ -178,6 +178,8 @@ in
       xmobar
       pandoc
       hakyll
+      time
+      text
     ]))
     (callPackage ./hxh.nix {})
     haskell-language-server
