@@ -107,7 +107,7 @@ in
    } else {};
  };
  hardware.pulseaudio.extraConfig = if args.bluetooth then "load-module module-switch-on-connect" else "";
- services.blueman.enable = args.bluetooth;
+ # services.blueman.enable = args.bluetooth;
 
   # Define a user account
   users.users.${args.userName} = {
