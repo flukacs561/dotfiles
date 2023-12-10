@@ -1,65 +1,81 @@
-import qualified Data.Map as M
-import Data.Monoid ( All )
-import Data.Ratio ( (%) )
-
+import Data.Map qualified as M
+import Data.Monoid (All)
+import Data.Ratio ((%))
 import XMonad
-
-import XMonad.Actions.SpawnOn ( spawnOn )
-
-import qualified XMonad.StackSet as W
-
-import qualified XMonad.Prompt as P
-import XMonad.Prompt.RunOrRaise ( runOrRaisePrompt )
-import XMonad.Prompt.AppLauncher ( launchApp )
-import XMonad.Prompt.FuzzyMatch ( fuzzyMatch, fuzzySort )
-import XMonad.Prompt.Window
-    ( allWindows, windowPrompt, WindowPrompt(Goto) )
-import XMonad.Prompt.Pass
-    ( passEditPrompt,
-      passGeneratePrompt,
-      passPrompt,
-      passRemovePrompt,
-      passTypePrompt )
-
-import XMonad.Util.EZConfig ( mkKeymap )
-import XMonad.Util.Run ( hPutStrLn, spawnPipe )
-
+import XMonad.Actions.SpawnOn (spawnOn)
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops (ewmh, ewmhFullscreen)
 import XMonad.Hooks.ManageDocks
-    ( docks, avoidStruts, ToggleStruts(ToggleStruts), manageDocks )
-import XMonad.Hooks.ManageHelpers ( doRectFloat, doRaise )
-import XMonad.Hooks.EwmhDesktops ( ewmh, ewmhFullscreen )
-
-import XMonad.Layout.Tabbed
-import XMonad.Layout.NoBorders ( smartBorders )
-import XMonad.Layout.Simplest ( Simplest(Simplest) )
-import XMonad.Layout.SubLayouts
-    ( subLayout,
-      onGroup,
-      pullGroup,
-      GroupMsg(UnMergeAll, MergeAll, UnMerge) )
-import XMonad.Layout.WindowNavigation ( windowNavigation )
+  ( ToggleStruts (ToggleStruts),
+    avoidStruts,
+    docks,
+    manageDocks,
+  )
+import XMonad.Hooks.ManageHelpers (doRaise, doRectFloat)
 import XMonad.Layout.BoringWindows
-import XMonad.Layout.Renamed ( renamed, Rename( Replace ) )
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Layout.PerWorkspace
-
+import XMonad.Layout.Renamed (Rename (Replace), renamed)
+import XMonad.Layout.Simplest (Simplest (Simplest))
+import XMonad.Layout.SubLayouts
+  ( GroupMsg (MergeAll, UnMerge, UnMergeAll),
+    onGroup,
+    pullGroup,
+    subLayout,
+  )
+import XMonad.Layout.Tabbed
+import XMonad.Layout.WindowNavigation (windowNavigation)
+import XMonad.Prompt qualified as P
+import XMonad.Prompt.AppLauncher (launchApp)
+import XMonad.Prompt.FuzzyMatch (fuzzyMatch, fuzzySort)
+import XMonad.Prompt.Pass
+  ( passEditPrompt,
+    passGeneratePrompt,
+    passPrompt,
+    passRemovePrompt,
+    passTypePrompt,
+  )
+import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
+import XMonad.Prompt.Window
+  ( WindowPrompt (Goto),
+    allWindows,
+    windowPrompt,
+  )
+import XMonad.StackSet qualified as W
+import XMonad.Util.EZConfig (mkKeymap)
+import XMonad.Util.Run (hPutStrLn, spawnPipe)
 
 -- brightGreen = #009933
 darkGrey = "#282828"
+
 darkRed = "#cc241d"
+
 darkYellow = "#98971a"
+
 darkOrange = "#d79921"
+
 darkBlue = "#458588"
+
 darkPurple = "#b16286"
+
 darkGreen = "#228062"
+
 darkBeige = "#a89984"
+
 lightGrey = "#928374"
+
 lightRed = "#fb4934"
+
 lightYellow = "#b8bb26"
+
 lightOrange = "#fabd2f"
+
 lightBlue = "#83a598"
+
 lightPurple = "#d3869b"
+
 lightGreen = "#8ec07c"
+
 lightBeige = "#ebdbb2"
 
 myEmacs :: String
@@ -70,7 +86,7 @@ myTerminal :: String
 myTerminal = "alacritty"
 
 myScreenLocker :: String
-myScreenLocker = "betterlockscreen --lock"
+myScreenLocker = "XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_PASSWORD_PROMPT=\"asterisks\" xsecurelock"
 
 myBrowser :: String
 myBrowser = "chromium"
@@ -96,11 +112,11 @@ altMask = mod1Mask
 
 -- Names of my workspaces
 myWorkspaces :: [String]
-myWorkspaces = ["term", "web", "mail", "book", "misc", "video"]
+myWorkspaces = ["term", "web", "maths", "book", "misc", "mail"]
 
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor :: String
-myNormalBorderColor =  darkGrey
+myNormalBorderColor = darkGrey
 
 myFocusedBorderColor :: String
 myFocusedBorderColor = darkGreen
@@ -119,154 +135,167 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 -- Configuration for prompts
 myXPConfig :: P.XPConfig
-myXPConfig = def
-      { P.font                 = setMyFont myFont 12
-      , P.bgColor              = lightBeige
-      , P.fgColor              = darkGrey
-      , P.bgHLight             = lightGreen
-      , P.fgHLight             = darkGrey
-      , P.borderColor          = darkGreen
-      , P.promptBorderWidth    = 2
-      , P.promptKeymap         = myXPKeymap
-      , P.position             = P.CenteredAt { P.xpCenterY = 0.3, P.xpWidth = 0.3 }
-      , P.height               = 30
-      , P.historySize          = 256
-      , P.historyFilter        = id
-      , P.defaultText          = []
-      , P.autoComplete         = Nothing
-      , P.complCaseSensitivity = P.CaseInSensitive
-      , P.showCompletionOnTab  = False
-      , P.searchPredicate      = fuzzyMatch
-      , P.sorter               = fuzzySort
-      , P.alwaysHighlight      = True
-      , P.maxComplRows         = Just 8      -- set to Nothing for no limit on rows
-      }
+myXPConfig =
+  def
+    { P.font = setMyFont myFont 12,
+      P.bgColor = lightBeige,
+      P.fgColor = darkGrey,
+      P.bgHLight = lightGreen,
+      P.fgHLight = darkGrey,
+      P.borderColor = darkGreen,
+      P.promptBorderWidth = 2,
+      P.promptKeymap = myXPKeymap,
+      P.position = P.CenteredAt {P.xpCenterY = 0.3, P.xpWidth = 0.3},
+      P.height = 30,
+      P.historySize = 256,
+      P.historyFilter = id,
+      P.defaultText = [],
+      P.autoComplete = Nothing,
+      P.complCaseSensitivity = P.CaseInSensitive,
+      P.showCompletionOnTab = False,
+      P.searchPredicate = fuzzyMatch,
+      P.sorter = fuzzySort,
+      P.alwaysHighlight = True,
+      P.maxComplRows = Just 8 -- set to Nothing for no limit on rows
+    }
 
 myXPConfigAutoComplete :: P.XPConfig
-myXPConfigAutoComplete = myXPConfig
-  { P.autoComplete = Just 10000 } -- That is .1 second
+myXPConfigAutoComplete =
+  myXPConfig
+    { P.autoComplete = Just 10000 -- That is .1 second
+    }
 
 myXPConfigMpv :: P.XPConfig
-myXPConfigMpv = myXPConfig
-  { P.defaultText  = "/home/lukacsf/let/" }
+myXPConfigMpv =
+  myXPConfig
+    { P.defaultText = "/home/lukacsf/let/"
+    }
 
-myXPKeymap :: M.Map (KeyMask,KeySym) (P.XP ())
-myXPKeymap = M.fromList $
-     fmap (helper controlMask)           -- control + <key>
-     [ (xK_z, P.killBefore)              -- kill line backwards
-     , (xK_k, P.killAfter)               -- kill line forwards
-     , (xK_a, P.startOfLine)             -- move to the beginning of the line
-     , (xK_e, P.endOfLine)               -- move to the end of the line
-     , (xK_d, P.deleteString P.Next)     -- delete a character foward
-     , (xK_b, P.moveCursor P.Prev)       -- move cursor forward
-     , (xK_f, P.moveCursor P.Next)       -- move cursor backward
-     , (xK_BackSpace, P.killWord P.Prev) -- kill the previous word
-     , (xK_y, P.pasteString)             -- paste a string
-     , (xK_g, P.quit)                    -- quit out of prompt
-     ]
-     ++
-     fmap (helper altMask)                -- meta key + <key>
-     [ (xK_BackSpace, P.killWord P.Prev)  -- kill the prev word
-     , (xK_f, P.moveWord P.Next)          -- move a word forward
-     , (xK_b, P.moveWord P.Prev)          -- move a word backward
-     , (xK_d, P.killWord P.Next)          -- kill the next word
-     , (xK_n, P.moveHistory W.focusUp')   -- move up through history
-     , (xK_p, P.moveHistory W.focusDown') -- move down through history
-     ]
-     ++
-     fmap (helper 0)
-     [ (xK_Return, P.setSuccess True >> P.setDone True)   -- select focused option
-     , (xK_KP_Enter, P.setSuccess True >> P.setDone True) -- select focused option
-     , (xK_BackSpace, P.deleteString P.Prev)              -- delete a character backwards
-     , (xK_Delete, P.deleteString P.Next)                 -- delete a character forwards
-     , (xK_Left, P.moveCursor P.Prev)                     -- move cursor backwards
-     , (xK_Right, P.moveCursor P.Next)                    -- move cursor forwards
-     , (xK_Home, P.startOfLine)                           -- move to the start of the line
-     , (xK_End, P.endOfLine)                              -- move to the end of the line
-     , (xK_Down, P.moveHistory W.focusUp')                -- move up through history
-     , (xK_Up, P.moveHistory W.focusDown')                -- move down through history
-     , (xK_Escape, P.quit)                                -- quit out of prompt
-     ]
-     where helper modifier (key, action) = ((modifier, key), action)
+myXPKeymap :: M.Map (KeyMask, KeySym) (P.XP ())
+myXPKeymap =
+  M.fromList $
+    fmap
+      (helper controlMask) -- control + <key>
+      [ (xK_z, P.killBefore), -- kill line backwards
+        (xK_k, P.killAfter), -- kill line forwards
+        (xK_a, P.startOfLine), -- move to the beginning of the line
+        (xK_e, P.endOfLine), -- move to the end of the line
+        (xK_d, P.deleteString P.Next), -- delete a character foward
+        (xK_b, P.moveCursor P.Prev), -- move cursor forward
+        (xK_f, P.moveCursor P.Next), -- move cursor backward
+        (xK_BackSpace, P.killWord P.Prev), -- kill the previous word
+        (xK_y, P.pasteString), -- paste a string
+        (xK_g, P.quit) -- quit out of prompt
+      ]
+      ++ fmap
+        (helper altMask) -- meta key + <key>
+        [ (xK_BackSpace, P.killWord P.Prev), -- kill the prev word
+          (xK_f, P.moveWord P.Next), -- move a word forward
+          (xK_b, P.moveWord P.Prev), -- move a word backward
+          (xK_d, P.killWord P.Next), -- kill the next word
+          (xK_n, P.moveHistory W.focusUp'), -- move up through history
+          (xK_p, P.moveHistory W.focusDown') -- move down through history
+        ]
+      ++ fmap
+        (helper 0)
+        [ (xK_Return, P.setSuccess True >> P.setDone True), -- select focused option
+          (xK_KP_Enter, P.setSuccess True >> P.setDone True), -- select focused option
+          (xK_BackSpace, P.deleteString P.Prev), -- delete a character backwards
+          (xK_Delete, P.deleteString P.Next), -- delete a character forwards
+          (xK_Left, P.moveCursor P.Prev), -- move cursor backwards
+          (xK_Right, P.moveCursor P.Next), -- move cursor forwards
+          (xK_Home, P.startOfLine), -- move to the start of the line
+          (xK_End, P.endOfLine), -- move to the end of the line
+          (xK_Down, P.moveHistory W.focusUp'), -- move up through history
+          (xK_Up, P.moveHistory W.focusDown'), -- move down through history
+          (xK_Escape, P.quit) -- quit out of prompt
+        ]
+  where
+    helper modifier (key, action) = ((modifier, key), action)
 
 myTabTheme :: Theme
-myTabTheme = def { fontName            = setMyFont myFont 9
-                 , decoHeight          = 16
-                 , activeColor         = darkGreen
-                 , inactiveColor       = darkBeige
-                 , activeBorderColor   = darkGreen
-                 , inactiveBorderColor = darkGrey
-                 , activeTextColor     = lightBeige
-                 , inactiveTextColor   = darkGrey
-                 }
+myTabTheme =
+  def
+    { fontName = setMyFont myFont 9,
+      decoHeight = 16,
+      activeColor = darkGreen,
+      inactiveColor = darkBeige,
+      activeBorderColor = darkGreen,
+      inactiveBorderColor = darkGrey,
+      activeTextColor = lightBeige,
+      inactiveTextColor = darkGrey
+    }
 
 ------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here. --
 ------------------------------------------------------------
 myKeys :: XConfig l -> M.Map (KeyMask, KeySym) (X ())
-myKeys c = mkKeymap c $
-  [ ("M-<Tab>",                spawn myTerminal)
-  , ("M-C-l",                  spawn myScreenLocker)
-  , ("M-q",                    kill)
-  , ("M-<Space>",              XMonad.Layout.BoringWindows.focusDown)
-  , ("M-S-<Space>",            XMonad.Layout.BoringWindows.focusUp)
-  , ("M-<Print>",              spawn "/home/lukacsf/code/system/./screenshot.sh")
-  , ("M-b",                    spawn myBrowser)
-  -- Window management commands
-  , ("M-h",                    sendMessage Shrink)
-  , ("M-l",                    sendMessage Expand)
-  , ("M-S-j",                  windows W.swapDown)
-  , ("M-S-k",                  windows W.swapUp)
-  , ("M-n",                    refresh)
-  , ("M-m",                    windows W.focusMaster)
-  , ("M-<Return>",             windows W.swapMaster)
-  , ("M-C-t",                  withFocused $ windows . W.sink)
-  , ("M-f f",                  sendMessage NextLayout)
-  , ("M-f t",                  sendMessage ToggleStruts)
-  , ("M-s",                    sendMessage ToggleStruts)
-  -- Tabbed sublayout commands
-  , ("M-t h",                  sendMessage $ pullGroup L)
-  , ("M-t l",                  sendMessage $ pullGroup R)
-  , ("M-t k",                  sendMessage $ pullGroup U)
-  , ("M-t j",                  sendMessage $ pullGroup D)
-  , ("M-t a",                  withFocused $ sendMessage . MergeAll)
-  , ("M-t u",                  withFocused $ sendMessage . UnMerge)
-  , ("M-t S-u",                withFocused $ sendMessage . UnMergeAll)
-  , ("M-j",                    onGroup W.focusUp')
-  , ("M-k",                    onGroup W.focusDown')
-  -- Keybindings for prompts
-  -- The prefix for launching prompts is "M-r" for run
-  , ("M-r d",                  launchApp myXPConfig "zathura")
-  , ("M-r v",                  launchApp myXPConfigMpv "mpv")
-  , ("M-r r",                  runOrRaisePrompt myXPConfigAutoComplete)
-  , ("M-w",                    windowPrompt myXPConfigAutoComplete Goto allWindows)
-  -- The submapping prefix for pass related prompts is p for pass
-  , ("M-r p p",                passTypePrompt myXPConfig)
-  , ("M-r p c",                passPrompt myXPConfig)
-  , ("M-r p g",                passGeneratePrompt myXPConfig)
-  , ("M-r p e",                passEditPrompt myXPConfig)
-  , ("M-r p r",                passRemovePrompt myXPConfig)
-  -- Keybindings for media related actions
-  , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+ unmute") -- raise volume
-  , ("S-<XF86AudioRaiseVolume>", spawn "amixer -q set Master 10%+ unmute") -- raise volume
-  , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute") -- lower volume
-  , ("S-<XF86AudioLowerVolume>", spawn "amixer -q set Master 10%- unmute") -- lower volume
-  , ("<XF86AudioMute>",        spawn "amixer -q set Master toggle")      -- mute sound
-  -- The prefix for issuing media commnds is "M-p" for playback
-  , ("M-p p",                  spawn "emacsclient -e \"(emms-pause)\"") -- play/pause music
-  , ("M-p b",                  spawn "emacsclient -e \"(emms-previous)\"")   -- previous track
-  , ("M-p f",                  spawn "emacsclient -e \"(emms-next)\"")   -- next track
-  , ("M-p s",                  spawn "emacsclient -e \"(emms-stop)\"")   -- stop playback
-  , ("M-p c",                  spawn "pavucontrol")
-  ] ++
-  -- Keybindings for switching workspaces
-  [ ("M-" ++ key, windows $ W.greedyView workspace)
-    | (key, workspace) <- zip (fmap show [0..]) myWorkspaces
-  ] ++
-  -- Keybindings for moving windows between workspaces
-  [ ("M-S-" ++ key, windows $ W.shift workspace)
-    | (key, workspace) <- zip (fmap show [0..]) myWorkspaces
-  ]
+myKeys c =
+  mkKeymap c $
+    [ ("M-<Tab>", spawn myTerminal),
+      ("M-C-l", spawn myScreenLocker),
+      ("M-q", kill),
+      ("M-<Space>", XMonad.Layout.BoringWindows.focusDown),
+      ("M-S-<Space>", XMonad.Layout.BoringWindows.focusUp),
+      ("M-<Print>", spawn "/home/lukacsf/code/system/./screenshot.sh"),
+      ("M-b", spawn myBrowser),
+      -- Window management commands
+      ("M-h", sendMessage Shrink),
+      ("M-l", sendMessage Expand),
+      ("M-S-j", windows W.swapDown),
+      ("M-S-k", windows W.swapUp),
+      ("M-n", refresh),
+      ("M-m", windows W.focusMaster),
+      ("M-<Return>", windows W.swapMaster),
+      ("M-C-t", withFocused $ windows . W.sink),
+      ("M-f f", sendMessage NextLayout),
+      ("M-f t", sendMessage ToggleStruts),
+      ("M-s", sendMessage ToggleStruts),
+      -- Tabbed sublayout commands
+      ("M-t h", sendMessage $ pullGroup L),
+      ("M-t l", sendMessage $ pullGroup R),
+      ("M-t k", sendMessage $ pullGroup U),
+      ("M-t j", sendMessage $ pullGroup D),
+      ("M-t a", withFocused $ sendMessage . MergeAll),
+      ("M-t u", withFocused $ sendMessage . UnMerge),
+      ("M-t S-u", withFocused $ sendMessage . UnMergeAll),
+      ("M-j", onGroup W.focusUp'),
+      ("M-k", onGroup W.focusDown'),
+      -- Keybindings for prompts
+      -- The prefix for launching prompts is "M-r" for run
+      ("M-r d", launchApp myXPConfig "zathura"),
+      ("M-r v", launchApp myXPConfigMpv "mpv"),
+      ("M-r r", runOrRaisePrompt myXPConfigAutoComplete),
+      ("M-w", windowPrompt myXPConfigAutoComplete Goto allWindows),
+      -- The submapping prefix for pass related prompts is p for pass
+      ("M-r p p", passTypePrompt myXPConfig),
+      ("M-r p c", passPrompt myXPConfig),
+      ("M-r p g", passGeneratePrompt myXPConfig),
+      ("M-r p e", passEditPrompt myXPConfig),
+      ("M-r p r", passRemovePrompt myXPConfig),
+      -- Keybindings for media related actions
+      ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+ unmute"), -- raise volume
+      ("S-<XF86AudioRaiseVolume>", spawn "amixer -q set Master 10%+ unmute"), -- raise volume
+      ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%- unmute"), -- lower volume
+      ("S-<XF86AudioLowerVolume>", spawn "amixer -q set Master 10%- unmute"), -- lower volume
+      ("<XF86AudioMute>", spawn "amixer -q set Master toggle"), -- mute sound
+      -- The prefix for issuing media commnds is "M-p" for playback
+      ("M-p p", spawn "emacsclient -e \"(emms-pause)\""), -- play/pause music
+      ("M-p b", spawn "emacsclient -e \"(emms-previous)\""), -- previous track
+      ("M-p f", spawn "emacsclient -e \"(emms-next)\""), -- next track
+      ("M-p s", spawn "emacsclient -e \"(emms-stop)\""), -- stop playback
+      ("M-p c", spawn "pavucontrol")
+    ]
+      ++
+      -- Keybindings for switching workspaces
+      [ ("M-" ++ key, windows $ W.greedyView workspace)
+        | (key, workspace) <- zip (fmap show [0 ..]) myWorkspaces
+      ]
+      ++
+      -- Keybindings for moving windows between workspaces
+      [ ("M-S-" ++ key, windows $ W.shift workspace)
+        | (key, workspace) <- zip (fmap show [0 ..]) myWorkspaces
+      ]
 
 -----------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events --
@@ -274,7 +303,7 @@ myKeys c = mkKeymap c $
 myMouseBindings :: XConfig l -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modm}) =
   M.fromList
-      -- mod-button1, Set the window to floating mode and move by dragging
+    -- mod-button1, Set the window to floating mode and move by dragging
     [ ( (modm, button1),
         \w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster
       ),
@@ -321,28 +350,31 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) =
 --     -- standard monocle layout
 --     full = renamed [CutWordsRight 2] Full
 
-tall = renamed [XMonad.Layout.Renamed.Replace "tall"]
-     $ smartBorders
-     $ windowNavigation
-     $ addTabs shrinkText myTabTheme
-     $ subLayout [] Simplest
-     $ boringWindows
-     $ avoidStruts
-     $ Tall nmaster delta ratio
-    where
-      nmaster = 1
-      ratio = 1 / 2
-      delta = 3 / 100
+tall =
+  renamed [XMonad.Layout.Renamed.Replace "tall"] $
+    smartBorders $
+      windowNavigation $
+        addTabs shrinkText myTabTheme $
+          subLayout [] Simplest $
+            boringWindows $
+              avoidStruts $
+                Tall nmaster delta ratio
+  where
+    nmaster = 1
+    ratio = 1 / 2
+    delta = 3 / 100
 
-full = renamed [XMonad.Layout.Renamed.Replace "full"]
-     $ smartBorders
-     $ windowNavigation
-     $ addTabs shrinkText myTabTheme
-     $ subLayout [] Simplest
-     $ boringWindows
-     $ avoidStruts Full
+full =
+  renamed [XMonad.Layout.Renamed.Replace "full"] $
+    smartBorders $
+      windowNavigation $
+        addTabs shrinkText myTabTheme $
+          subLayout [] Simplest $
+            boringWindows $
+              avoidStruts Full
 
 myLayout = tall ||| full
+
 ------------------------------------------------------------------------
 -- Window rules:
 
@@ -362,19 +394,20 @@ myLayout = tall ||| full
 --
 
 doFloatCenter :: ManageHook
-doFloatCenter = doRectFloat (W.RationalRect (1 % 4) (1 % 4) (1%2) (1%2))
+doFloatCenter = doRectFloat (W.RationalRect (1 % 4) (1 % 4) (1 % 2) (1 % 2))
 
 myManageHook :: ManageHook
-myManageHook = composeAll
-    [ title =? "Save File" --> doFloatCenter
-    , title =? "Bluetooth Devices" --> doFloatCenter
-    , className =? "Pavucontrol" --> doFloatCenter
-    , className =? "Brave-browser" --> doShift "web" <+> doRaise
-    , className =? "chromium-browser" --> doShift "web" <+> doRaise
-    , className =? "mpv" --> doShift "video" <+> doRaise
-    , className =? "thunderbird" --> doShift "mail"
-    , appName =? "Calendar" --> doFloatCenter
-    --, isFullscreen --> doFullFloat
+myManageHook =
+  composeAll
+    [ title =? "Save File" --> doFloatCenter,
+      title =? "Bluetooth Devices" --> doFloatCenter,
+      className =? "Pavucontrol" --> doFloatCenter,
+      className =? "Brave-browser" --> doShift "web" <+> doRaise,
+      className =? "chromium-browser" --> doShift "web" <+> doRaise,
+      className =? "mpv" --> doShift "misc" <+> doRaise,
+      className =? "thunderbird" --> doShift "mail" <+> doRaise,
+      appName =? "Calendar" --> doFloatCenter
+      -- , isFullscreen --> doFullFloat
     ]
 
 ------------------------------------------------------------------------
@@ -388,13 +421,12 @@ myManageHook = composeAll
 --
 myStartupHook :: X ()
 myStartupHook = do
-  spawn "setxkbmap hu"
+  -- spawn "setxkbmap hu"
   spawnOn "mail" "keepassxc"
+  let path = "/home/lukacsf/code/wiki/" in spawn $ "ghc --make " <> path <> "site.sh && " <> path <> "./site clean && " <> path <> "./site watch"
 
 -----------------------------------------------------------------------
 -- Log hook
-
-
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -403,34 +435,37 @@ myStartupHook = do
 main :: IO ()
 main = do
   xmobar <- spawnPipe "xmobar $HOME/code/dotfiles/xmobar"
-  xmonad . ewmh . ewmhFullscreen . docks $  def
-    { terminal = myTerminal
-    , focusFollowsMouse = myFocusFollowsMouse
-    , clickJustFocuses = myClickJustFocuses
-    , borderWidth = myBorderWidth
-    , modMask = myModMask
-    , workspaces = myWorkspaces
-    , normalBorderColor = myNormalBorderColor
-    , focusedBorderColor = myFocusedBorderColor
-    , keys = myKeys
-    , mouseBindings = myMouseBindings
-    , layoutHook = onWorkspace "mail" full myLayout
-    , manageHook = myManageHook <+> manageDocks
-    , handleEventHook = mempty
-    , logHook = dynamicLogWithPP $ xmobarPP
-        { ppOutput = hPutStrLn xmobar
-        , ppCurrent = xmobarColor lightGreen "" . wrap "[" "]"
-        , ppVisible = xmobarColor darkPurple ""
-        , ppHidden = xmobarColor lightBeige "" . wrap "" "^"
-        , ppHiddenNoWindows = xmobarColor lightBeige ""
-        , ppUrgent = xmobarColor darkRed "" . wrap "!" "!"
-        , ppTitle = xmobarColor lightBeige "" . shorten 60
-        , ppSep = xmobarColor lightBeige "" " | "
-        , ppExtras  = [windowCount]
-        , ppOrder  = \(ws:l:t:ex) -> ws:l:ex++[t]
-        }
-    , startupHook = myStartupHook
-    }
+  xmonad . ewmh . ewmhFullscreen . docks $
+    def
+      { terminal = myTerminal,
+        focusFollowsMouse = myFocusFollowsMouse,
+        clickJustFocuses = myClickJustFocuses,
+        borderWidth = myBorderWidth,
+        modMask = myModMask,
+        workspaces = myWorkspaces,
+        normalBorderColor = myNormalBorderColor,
+        focusedBorderColor = myFocusedBorderColor,
+        keys = myKeys,
+        mouseBindings = myMouseBindings,
+        layoutHook = onWorkspace "mail" full myLayout,
+        manageHook = myManageHook <+> manageDocks,
+        handleEventHook = mempty,
+        logHook =
+          dynamicLogWithPP $
+            xmobarPP
+              { ppOutput = hPutStrLn xmobar,
+                ppCurrent = xmobarColor lightGreen "" . wrap "[" "]",
+                ppVisible = xmobarColor darkPurple "",
+                ppHidden = xmobarColor lightBeige "" . wrap "" "^",
+                ppHiddenNoWindows = xmobarColor lightBeige "",
+                ppUrgent = xmobarColor darkRed "" . wrap "!" "!",
+                ppTitle = xmobarColor lightBeige "" . shorten 60,
+                ppSep = xmobarColor lightBeige "" " | ",
+                ppExtras = [windowCount],
+                ppOrder = \(ws : l : t : ex) -> ws : l : ex ++ [t]
+              },
+        startupHook = myStartupHook
+      }
 
 -- Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
