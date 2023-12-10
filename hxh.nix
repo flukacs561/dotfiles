@@ -6,8 +6,8 @@ haskellPackages.mkDerivation {
   src = fetchFromGitHub {
     owner = "flukacs561";
     repo = "hxh";
-    rev = "676c0f57e03088fe4efb54a1b63b5854a393ee51";
-    sha256 = "0pkqb7y16gx5qrfjm3c9qflnxi3z58x5w0swq0567bw1r5zw0lbs";
+    rev = "e6cd1cb3788d28ef45af49ad59f3f158f162ec73";
+    sha256 = "02m2zxf9pwpzxmcyz1xza8x9qm8b28iz86an814490x2a2k2fpfc";
   };
   isLibrary = false;
   isExecutable = true;
