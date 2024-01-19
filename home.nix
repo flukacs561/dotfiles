@@ -5,7 +5,6 @@ in
 rec {
   imports = [
     ./helix.nix
-    ./alacritty.nix
     ./newsboat.nix
   ];
   

@@ -61,8 +61,6 @@ in
     xkbOptions = "ctrl:nocaps";
     desktopManager.wallpaper.mode = "scale";
   };
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
   
   services.xserver.libinput = {
     enable = true;
@@ -71,11 +69,18 @@ in
   };
 
   # Set LightDM with a minimal greeter.
-  # services.xserver.displayManager.lightdm = {
-  #   enable = true;
-  #   # This will also set the desktop wallpaper
-  #   background = ./forest-background.jpg;
-  # };
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+    # This will also set the desktop wallpaper
+    background = ./forest-background.jpg;
+  };
+
+  services.xserver.desktopManager.plasma5.enable = true;
+  security.pam.services.kwallet = {
+    name = "kwallet";
+    enableKwallet = false;
+  };
+
 
   services.xserver.windowManager.xmonad = {
     enable = true;
@@ -119,7 +124,7 @@ in
    } else {};
  };
  hardware.pulseaudio.extraConfig = if args.bluetooth then "load-module module-switch-on-connect" else "";
- # services.blueman.enable = args.bluetooth;
+ services.blueman.enable = args.bluetooth;
 
   # Define a user account
   users.users.${args.userName} = {
@@ -155,13 +160,11 @@ in
     keepassxc
     thunderbird
     wezterm
-    libsForQt5.bluedevil
     # CLI programs
     xclip
     xsecurelock
     rsync
     git
-    gh
     helix
     skim
     ripgrep
@@ -172,14 +175,14 @@ in
     texlab
     marksman
     (pkgs.haskellPackages.ghcWithPackages ( haskell-packages: with haskell-packages; [
-      cabal-install
       xmonad
       xmonad-contrib
       xmobar
       pandoc
-      hakyll
-      time
-      text
+      # cabal-install
+      # hakyll
+      # time
+      # text
     ]))
     (callPackage ./hxh.nix {})
     haskell-language-server
