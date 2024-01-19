@@ -12,14 +12,69 @@
     '';
     urls = [
       {
-        title = "Truth Unites";
-        tags =  ["chr" "yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCtWDnUokOD--s2aFxLT5uVA";
+        title = "Jonathan Pageau -- Clips";
+        tags = ["chr" "orth" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCObI9A-XPP3KD3Fc3MnzOuw";
+      }
+      {
+        title = "Jonathan Pageau";
+        tags = ["chr" "orth" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCtCTSf3UwRU14nYWr_xm-dQ";
+      }
+      {
+        title = "Father Spyridon";
+        tags = ["chr" "orth" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCkpBmkoZ6yToHhB8uFDp46Q";
+      }
+      {
+        title = "Mull Monastery";
+        tags = ["chr" "orth" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC3puFf-lxwTWBFCfHHjCz2A";
+      }
+      {
+        title = "The Thomistic Institute";
+        tags = ["chr" "cath" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCd55APptap1Ve7Jwqa8OcBA";
+      }
+      {
+        title = "Pints with Aquinas";
+        tags = ["chr" "cath" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UClh4JeqYB1QN6f1h_bzmEng";
+      }
+      {
+        title = "Captain Sinbad";
+        tags = ["yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC8XKyvQ5Ne_bvYbgv8LaIeg";
+      }
+      {
+        title = "Academy of Ideas";
+        tags = ["phil" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCiRiQGCHGjDLT9FQXFW0I3A";
+      }
+      {
+        title = "Apostolic Majesty";
+        tags = ["history" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCuTWocQj6fFDEGFCU1XI0cQ";
+      }
+      {
+        title = "Russell Walter";
+        tags = ["phil" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCnN-3GfVjuEIHYo39HfhB1Q";
       }
       {
         title = "Invocabo Nomen Domini";
-        tags = ["chr"];
+        tags = ["chr" "cath"];
         url = "https://invocabo.wordpress.com/feed/";
+      }
+      {
+        title = "Truth Unites";
+        tags =  ["chr" "prot" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCtWDnUokOD--s2aFxLT5uVA";
+      }
+      {
+        title = "Redeemed Zoomer";
+        tags = ["chr" "prot" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCiLqiXa5O85APUBQV7X5w9Q";
       }
       {
         title = "Thomas Wangenheim";
@@ -37,34 +92,9 @@
         url = "https://protesilaos.com/master.xml";
       }
       {
-        title = "Redeemed Zoomer";
-        tags = ["chr" "yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCiLqiXa5O85APUBQV7X5w9Q";
-      }
-      {
-        title = "Captain Sinbad";
-        tags = ["yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC8XKyvQ5Ne_bvYbgv8LaIeg";
-      }
-      {
         title = "The Ulengovs";
         tags = ["yt"];
         url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCg0pVEi7hMVSxCbdxeJ0VZA";
-      }
-      {
-        title = "Pints with Aquinas";
-        tags = ["chr" "yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UClh4JeqYB1QN6f1h_bzmEng";
-      }
-      {
-        title = "Apostolic Majesty";
-        tags = ["history" "yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCuTWocQj6fFDEGFCU1XI0cQ";
-      }
-      {
-        title = "Matthew Everhard";
-        tags = ["chr" "yt"];
-        url = "https://www.youtube.com/feeds/videos.xml?channel_id=hOXtiz9Q0YvVUee8A";
       }
       {
         title = "Mental Outlaw";
@@ -90,6 +120,26 @@
         title = "Emacs news";
         tags = ["tech"];
         url = "https://sachachua.com/blog/category/emacs-news/feed/";
+      }
+      {
+        title = "Björn Andreas Bull-Hansen";
+        tags = ["yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC95m7aBYo7wgNCoHb1ojQYw";
+      }
+      {
+        title = "The Hated One";
+        tags = ["tech" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCjr2bPAyPV7t35MvcgT3W8Q";
+      }
+      {
+        title = "Einzelgänger";
+        tags = ["phil" "yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCybBViio_TH_uiFFDJuz5tg";
+      }
+      {
+        title = "Dry Creek Wrangler School";
+        tags = ["yt"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCCU0HzTA9ddqOgtuV-TJ9yw";
       }
     ];
   };
