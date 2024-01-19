@@ -83,7 +83,7 @@ myEmacs = "emacsclient -c -a \"emacs\""
 
 -- Preferred terminal program
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "wezterm"
 
 myScreenLocker :: String
 myScreenLocker = "XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_PASSWORD_PROMPT=\"asterisks\" xsecurelock"
@@ -112,7 +112,7 @@ altMask = mod1Mask
 
 -- Names of my workspaces
 myWorkspaces :: [String]
-myWorkspaces = ["term", "web", "maths", "book", "misc", "mail"]
+myWorkspaces = ["term", "web", "book", "misc"]
 
 -- Border colors for unfocused and focused windows, respectively.
 myNormalBorderColor :: String
@@ -422,8 +422,7 @@ myManageHook =
 myStartupHook :: X ()
 myStartupHook = do
   -- spawn "setxkbmap hu"
-  spawnOn "mail" "keepassxc"
-  let path = "/home/lukacsf/code/wiki/" in spawn $ "ghc --make " <> path <> "site.sh && " <> path <> "./site clean && " <> path <> "./site watch"
+  spawnOn "misc" "keepassxc"
 
 -----------------------------------------------------------------------
 -- Log hook
@@ -459,7 +458,7 @@ main = do
                 ppHidden = xmobarColor lightBeige "" . wrap "" "^",
                 ppHiddenNoWindows = xmobarColor lightBeige "",
                 ppUrgent = xmobarColor darkRed "" . wrap "!" "!",
-                ppTitle = xmobarColor lightBeige "" . shorten 60,
+                ppTitle = xmobarColor lightBeige "" . shorten 80,
                 ppSep = xmobarColor lightBeige "" " | ",
                 ppExtras = [windowCount],
                 ppOrder = \(ws : l : t : ex) -> ws : l : ex ++ [t]
