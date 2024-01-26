@@ -29,8 +29,10 @@ rec {
       gs = "git status";
       gd = "git diff";
 
-      ll = "ls -AGFhlv --group-directories-first --time-style=long-iso --color=always";
-      l = "ls -GFhlv --group-directories-first --time-style=long-iso --color=always";
+      # ll = "ls -AGFhlv --group-directories-first --time-style=long-iso --color=always";
+      # l = "ls -GFhlv --group-directories-first --time-style=long-iso --color=always";
+      l = "exa -l -h --git --icons --group-directories-first";
+      ll = "exa -l -a -h --git --icons --group-directories-first";
 
       hakyllr = "ghc --make site.hs && ./site clean && ./site watch";
       hakylld = "ghc --make site.hs && ./site clean && ./site build && ./site deploy";

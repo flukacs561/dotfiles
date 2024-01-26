@@ -160,6 +160,7 @@ in
     ripgrep
     ffmpeg
     cmus
+    exa
     # programming languages
     texlive.combined.scheme-full
     texlab
