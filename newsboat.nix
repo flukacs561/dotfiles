@@ -42,6 +42,11 @@
         url = "https://www.youtube.com/feeds/videos.xml?channel_id=UClh4JeqYB1QN6f1h_bzmEng";
       }
       {
+        title = "UnHerd";
+        tags = ["yt" "pol"];
+        url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCMxiv15iK_MFayY_3fU9loQ";
+      }
+      {
         title = "Captain Sinbad";
         tags = ["yt"];
         url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC8XKyvQ5Ne_bvYbgv8LaIeg";
