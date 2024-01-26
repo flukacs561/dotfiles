@@ -5,7 +5,6 @@ rec {
   nixRepo = "${homeDirectory}/code/dotfiles";
   configHome = "${homeDirectory}/.config";
   dataHome = "${homeDirectory}/.local/share";
-  bluetooth = true;
   online-mode = true;
   lock-screen = true;
   editor = "hx";

@@ -74,30 +74,7 @@ in
     plasma-browser-integration
   ];
 
-  services.xserver.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
-    extraPackages = haskellPackages : [ haskellPackages.xmobar ];
-    config = ./xmonad.hs;
-  };
-
-  # Light is available regardless of whether an X
-  # instance is running, hence it also works in the tty.
-  programs.light.enable = true;
   programs.zsh.enable = true;
-
-  # actkbp is an X-agnostic keyboard shortcut manager
-  # We cannot use it to set the volumekeys because we use
-  # PulseAudio, which supposedly is dependent upon the specific
-  # user running it, and actkbp is also user-agnostic.
-  # It basically cannot see PulseAudio
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      { keys = [ 224 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -U 5"; }
-      { keys = [ 225 ]; events = [ "key" ]; command = "/run/current-system/sw/bin/light -A 5"; }
-    ];
-  };
 
   # Enable sound.
  sound.enable = true;
@@ -152,7 +129,6 @@ in
     wezterm
     # CLI programs
     xclip
-    xsecurelock
     rsync
     git
     helix

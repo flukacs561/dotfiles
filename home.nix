@@ -23,17 +23,12 @@ rec {
       nixc = "sudo nix-collect-garbage --delete-older-than 14d";
       nixu = "nix flake update ${args.nixRepo} && sudo nixos-rebuild switch --flake '${args.nixRepo}#abulafia'";
 
-      off = "sudo shutdown 0";
-      tp = "xinput --set-prop 12 181";
       gitl = "git log --pretty --oneline --graph";
       gs = "git status";
       gd = "git diff";
 
       ll = "ls -AGFhlv --group-directories-first --time-style=long-iso --color=always";
       l = "ls -GFhlv --group-directories-first --time-style=long-iso --color=always";
-
-      hakyllr = "ghc --make site.hs && ./site clean && ./site watch";
-      hakylld = "ghc --make site.hs && ./site clean && ./site build && ./site deploy";
 
       use-unfree = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p";
 
@@ -85,12 +80,6 @@ rec {
       identityFile = "${args.homeDirectory}/.ssh/id_ed25519";
       extraOptions.PreferredAuthentications = "publickey";
     };
-  };
-
-  services.screen-locker = {
-    enable = args.lock-screen;
-    inactiveInterval = 60;
-    lockCmd = "XSECURELOCK_SHOW_DATETIME=1 XSECURELOCK_PASSWORD_PROMPT=\"asterisks\" ${pkgs.xsecurelock}/bin/xsecurelock";
   };
 
   programs.zsh = {
