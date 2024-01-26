@@ -68,19 +68,11 @@ in
     touchpad.naturalScrolling = true;
   };
 
-  # Set LightDM with a minimal greeter.
-  services.xserver.displayManager.lightdm = {
-    enable = true;
-    # This will also set the desktop wallpaper
-    background = ./forest-background.jpg;
-  };
-
+  services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
-  security.pam.services.kwallet = {
-    name = "kwallet";
-    enableKwallet = false;
-  };
-
+  environment.plasma5.excludePackages = with pkgs.libsForQt5; [
+    plasma-browser-integration
+  ];
 
   services.xserver.windowManager.xmonad = {
     enable = true;
@@ -112,19 +104,19 @@ in
  hardware.pulseaudio = {
    enable = true;
    package = pkgs.pulseaudioFull;
+   extraConfig = "load-module module-switch-on-connect";
  };
 
  # bluetooth
  hardware.bluetooth = {
-   enable = args.bluetooth;
-   settings = if args.bluetooth then {
+   enable = true;
+   powerOnBoot = true;
+   settings = {
      General = {
        Enable = "Source,Sink,Media,Socket";
      };
-   } else {};
+   };
  };
- hardware.pulseaudio.extraConfig = if args.bluetooth then "load-module module-switch-on-connect" else "";
- services.blueman.enable = args.bluetooth;
 
   # Define a user account
   users.users.${args.userName} = {
@@ -155,10 +147,8 @@ in
     chromium
     brave
     mpv
-    pavucontrol
     zathura
     keepassxc
-    thunderbird
     wezterm
     # CLI programs
     xclip
@@ -179,10 +169,6 @@ in
       xmonad-contrib
       xmobar
       pandoc
-      # cabal-install
-      # hakyll
-      # time
-      # text
     ]))
     (callPackage ./hxh.nix {})
     haskell-language-server
