@@ -171,6 +171,9 @@ in
       xmonad-contrib
       xmobar
       pandoc
+      cabal-install
+      time
+      text
     ]))
     (callPackage ./hxh.nix {})
     haskell-language-server
