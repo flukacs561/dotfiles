@@ -31,6 +31,21 @@ in
       keys.insert."A-e" = "normal_mode";
     };
     languages = {
+      language-server = {
+        haskell-lsp = {
+          command = "haskell-language-server-wrapper";
+          args = ["--lsp"];
+        };
+        latex-lsp = {
+          command = "texlab";
+          config = {
+            build.args = ["-pdf" "-interaction=nonstopmode" "-synctex=1" "%f"];
+            build.onSave = true;
+            completion.matcher = "prefix-ignore-case";
+            cleanAuxiliary = true;
+          };
+        };
+      };
       language = [{
         name = "haskell";
         scope = "source.haskell";
@@ -39,28 +54,18 @@ in
         roots = [];
         auto-format = false;
         comment-token = "--";
-        language-server = {
-          command = "haskell-language-server-wrapper";
-          args = ["--lsp"];
-        };
+        language-servers = ["haskell-lsp"];
       }
       {
         name = "latex";
         soft-wrap.enable = true;
-        language-server.command = "texlab";
-        config.texlab = {
-          build.args = ["-pdf" "-interaction=nonstopmode" "-synctex=1" "%f"];
-          build.onSave = true;
-          completion.matcher = "prefix-ignore-case";
-          cleanAuxiliary = true;
-        };
+        language-servers = ["latex-lsp"];
       }
       {
         name = "markdown";
         soft-wrap.enable = true;
       }
       ];
-
     };
   };
 }
