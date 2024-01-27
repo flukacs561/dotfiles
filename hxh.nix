@@ -6,8 +6,10 @@ haskellPackages.mkDerivation {
   src = fetchFromGitHub {
     owner = "flukacs561";
     repo = "hxh";
-    rev = "e6cd1cb3788d28ef45af49ad59f3f158f162ec73";
-    sha256 = "02m2zxf9pwpzxmcyz1xza8x9qm8b28iz86an814490x2a2k2fpfc";
+    # This is the full hash of the commit.
+    rev = "44b377d7811646d441c5a64318c8c519359ad015";
+    # nix-prefetch-url --unpack https://github.com/flukacs561/hxh/archive/refs/heads/master.zip
+    sha256 = "1vpgdhp2x1wp42sbf7hds14grkvyrdy6njpmnsyc832x2wrv8hjz";
   };
   isLibrary = false;
   isExecutable = true;
