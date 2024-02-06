@@ -151,6 +151,10 @@ in
     zathura
     keepassxc
     wezterm
+    krita
+    libsForQt5.kolourpaint
+    libsForQt5.kmines
+    libsForQt5.kdeconnect-kde
     # CLI programs
     xclip
     xsecurelock
@@ -160,6 +164,7 @@ in
     skim
     ripgrep
     ffmpeg
+    imagemagick
     cmus
     # programming languages
     texlive.combined.scheme-full
@@ -170,6 +175,7 @@ in
       xmonad-contrib
       xmobar
       pandoc
+      pandoc-cli
       cabal-install
       time
       text

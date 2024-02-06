@@ -65,6 +65,8 @@ rec {
     client.arguments = [ "-c \"emacs\"" ];
   };
 
+  programs.zathura.enable = true;
+
   programs.gpg.enable = true;
 
   services.gpg-agent = {
@@ -202,8 +204,8 @@ rec {
     enable = true;
     defaultApplications = {
       # document types
-      "application/epub+zip" = [ "zathura.desktop" ];
-      "application/pdf" = [ "zathura.desktop" ];
+      "application/epub+zip" = [ "org.pwmt.zathura.desktop" ];
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       "text/plain" = [ "helix.desktop" ];
       "text/tex" = [ "helix.desktop" ];
 
