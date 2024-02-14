@@ -27,6 +27,11 @@
         url = "https://www.youtube.com/feeds/videos.xml?channel_id=UCkpBmkoZ6yToHhB8uFDp46Q";
       }
       {
+        title = "Multipolarity with Philip Pilkington";
+        tags = ["podcast" "pol"];
+        url = "https://feeds.captivate.fm/multipolarity/";
+      }
+      {
         title = "Mull Monastery";
         tags = ["chr" "orth" "yt"];
         url = "https://www.youtube.com/feeds/videos.xml?channel_id=UC3puFf-lxwTWBFCfHHjCz2A";
