@@ -148,10 +148,8 @@ in
     chromium
     brave
     mpv
-    zathura
     keepassxc
     wezterm
-    krita
     libsForQt5.kolourpaint
     libsForQt5.kmines
     libsForQt5.kdeconnect-kde
@@ -166,6 +164,7 @@ in
     ffmpeg
     imagemagick
     cmus
+    unzip
     # programming languages
     texlive.combined.scheme-full
     texlab
@@ -179,6 +178,7 @@ in
       cabal-install
       time
       text
+      hakyll
     ]))
     (callPackage ./hxh.nix {})
     haskell-language-server
